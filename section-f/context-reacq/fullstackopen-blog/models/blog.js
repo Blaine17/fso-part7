@@ -6,6 +6,12 @@ const blogSchema = new mongoose.Schema({
   author: String,
   url: String,
   likes: Number,
+  comments: [{ body: {
+      type: String,
+        minLength: [3, 'Too few chars'],
+        required: [true, 'must post something'],
+      },
+      date: Date }],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

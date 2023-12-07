@@ -105,5 +105,22 @@ blogsRouter.put('/:id', middleware.getTokenFrom, middleware.userExtractor, async
   response.json(updatedBlog)
 })
 
+blogsRouter.post('/:id/comments', middleware.getTokenFrom, async (request, response) => {
+  console.log('in comments')
+  console.log('body:---', request.body)
+  const body = request.body.comment
+  const date = new Date();
+  const comment = { body, date: date }
+  console.log('line 114', comment)
+  const blog = await Blog.findById(request.params.id)
+  await blog.populate('user', { 'username': 1, 'name': 1 })
+  // blog.comments.push(comment)
+  const newComment = blog.comments.concat(comment)
+  console.log(blog)
+  blog.comments = newComment
+  const savedBlog = await blog.save()
+  return response.json(savedBlog)
+} )
+
 
 module.exports = blogsRouter 

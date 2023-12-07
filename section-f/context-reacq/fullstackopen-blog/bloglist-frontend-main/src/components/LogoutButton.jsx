@@ -10,12 +10,11 @@ const LogoutButton = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser({type: 'LOGOUT'})
   }
-
   return (
-    <div>
-      {`${user.name} logged in`}
-      <button onClick={handleLogout}>logout</button>
-    </div>
+    <>
+      <span className='justify-self-end m-1 p-3 col-span-3'>{`${user.name} logged in`}</span>
+      <a className='justify-self-end col-span-1 m-1 p-3 rounded-lg bg-purple-600 hover:bg-purple-400' onClick={handleLogout}>logout</a>
+    </>
   )
 }
 

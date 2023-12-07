@@ -9,7 +9,6 @@
     "build:ui": "rm -rf dist && cd phonebook && npm run build && cp -r dist ../frontend",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "start:test": "NODE_ENV=test node index.js"
-
   },
   "author": "Matti Luukkainen",
   "license": "MIT",
@@ -24,10 +23,13 @@
     "mongoose-unique-validator": "^4.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
     "eslint": "^8.52.0",
     "jest": "^29.7.0",
     "nodemon": "^3.0.1",
-    "supertest": "^6.3.3"
+    "postcss": "^8.4.32",
+    "supertest": "^6.3.3",
+    "tailwindcss": "^3.3.6"
   },
   "jest": {
     "testEnvironment": "node",

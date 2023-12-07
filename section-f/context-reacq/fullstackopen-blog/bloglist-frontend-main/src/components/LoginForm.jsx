@@ -30,28 +30,27 @@ const LoginForm = ({ }) => {
     <>
       <h1>log in to application</h1>
       <Notification />
-      <form onSubmit={handleLogin}>
-        <div>
+      <form className='m-2' onSubmit={handleLogin}>
+      
         username
           <input
+            className='m-1 bg-gray-500 rounded-lg placeholder:p-2'
             id='username'
             type="text"
             value={username}
             name="Username"
             onChange={({ target }) => setUsername(target.value)}
           />
-        </div>
-        <div>
           password
           <input
+          className='m-1 bg-gray-500 rounded-lg placeholder:p-2'
           id='password'
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
-        </div>
-        <button id='login-button' type="submit">login</button>
+        <button className='m-1 px-2 rounded-lg bg-purple-600 hover:bg-purple-400' id='login-button' type="submit">login</button>
       </form>
     </>
   )

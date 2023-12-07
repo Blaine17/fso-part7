@@ -41,11 +41,10 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     <>
-      <h1>test</h1>
-      <form onSubmit={handleBlogSubmit}>
+      <form className='m-2' onSubmit={handleBlogSubmit}>
         <div>
         title:
-          <input
+          <input className='m-1 bg-gray-500 rounded-lg placeholder:p-2'
             id='title'
             type="text"
             value={title}
@@ -56,7 +55,7 @@ const BlogForm = ({ createBlog }) => {
         </div>
         <div>
           author:
-          <input
+          <input className='m-1 bg-gray-500 rounded-lg placeholder:p-2'
             id='author'
             type="author"
             value={author}
@@ -67,7 +66,7 @@ const BlogForm = ({ createBlog }) => {
         </div>
         <div>
           url:
-          <input
+          <input className='m-1 bg-gray-500 rounded-lg '
             id='url'
             type="url"
             value={url}
@@ -76,7 +75,7 @@ const BlogForm = ({ createBlog }) => {
             placeholder='link to blog'
           />
         </div>
-        <button id='post' type="submit">post</button>
+        <button className='m-1 px-2 rounded-lg bg-purple-600 hover:bg-purple-400' id='post' type="submit">post</button>
       </form>
     </>
   )

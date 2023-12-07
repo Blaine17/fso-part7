@@ -23,14 +23,15 @@ const Blog = ({ blog, handleLikeButton, handleDeleteButton }) => {
 
   if (preview) {
     return (
-      <div className='blog' style={blogStyle}>
-        {blog.title} {blog.author}
-        <button onClick={handleButtonClick}>view</button>
-      </div>
+      
+        <Link to={`${blog.id}`}>
+          <div className='m-2 p-2 border-2 rounded-lg border-2text-lg hover:text-purple-400 hover:border-purple-400'>{blog.title}</div>
+        </Link>
+      
     )
   } else {
     return (
-      <div className='blog' style={blogStyle}>
+      <div className='' style={blogStyle}>
         {blog.title} {blog.author}
         <button onClick={handleButtonClick}>hide</button>
         <div><a href={blog.url}>{blog.url}</a></div>

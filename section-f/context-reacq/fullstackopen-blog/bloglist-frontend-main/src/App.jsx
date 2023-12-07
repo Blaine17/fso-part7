@@ -1,16 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
-import Blog from './components/Blog'
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate} from 'react-router-dom'
 import blogService from './services/blogs'
 import LoginForm from './components/loginForm'
 import LogoutButton from './components/logoutButton'
-import BlogForm from './components/BlogForm'
-import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import Users from './components/Users'
-import UserBlogs from './components/UserBlogs'
 import NotificationContext from './NotificationContext'
 import UserContext from './UserContext'
+import BlogWrapper from './components/BlogWrapper'
 import { useContext } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
@@ -20,13 +17,6 @@ const App = () => {
 
   const queryClient = useQueryClient()
 
-  const newBlogMutation = useMutation({ 
-    mutationFn: blogService.create,
-    onSuccess: (newBlog) => {
-     const blogs = queryClient.getQueryData(['blogs'])
-     queryClient.setQueryData(['blogs'], blogs.concat(newBlog))
-    }
-  })
 
   const updatedBlogMutation = useMutation({
     mutationFn: blogService.like,
@@ -40,14 +30,6 @@ const App = () => {
     }
   })
 
-  const removeBlogMutation = useMutation({
-    mutationFn: blogService.remove,
-    onSuccess: (removedBlog) => {
-      console.log(removedBlog)
-      const blogs = queryClient.getQueryData(['blogs'])
-      queryClient.setQueryData(['blogs'], blogs.filter(blog => blog.id !== removedBlog.id))
-    }
-  })
 
   const result = useQuery({
     queryKey: ['blogs'],
@@ -77,26 +59,12 @@ console.log(JSON.parse(JSON.stringify(result)))
     }
   }, [])
 
-  const createBlog = (blogObject) => {
-
-    blogFormRef.current.toggleVisibility()
-    console.log(blogObject)
-    newBlogMutation.mutate(blogObject)
-  }
+  
 
   const handleLikeButton = async (blogToUpdate) => {
    
     updatedBlogMutation.mutate(blogToUpdate)
-
-
   }
-
-  const handleDeleteButton = async (id) => {
-    console.log('hit delete button')
-
-    removeBlogMutation.mutate(id)
-  }
-
   if ( result.isLoading ) {
     return <div>loading data...</div>
   }
@@ -115,27 +83,23 @@ console.log(JSON.parse(JSON.stringify(result)))
   const padding = {
     padding: 5
   }
+
+  const scriptStyle = {
+    backgroundColor: 'lightgrey',
+}
   
   return (
-    <div>
-      <LogoutButton />
+    <div className="p-2 text-white bg-gray-600 h-full">
       <Router>
-        <Link style={padding} to='users'>users</Link>
-        <Link style={padding} to='blogs'>blogs</Link>
+        <nav className='rounded-lg grid grid-cols-6 gap- flex-row p-1 bg-slate-800'>
+        <Link className='justify-self-center m-1 p-3 col-span-1 rounded-lg bg-purple-600 hover:bg-purple-400' to='users'>users</Link>
+        <Link className='justify-self-center m-1 p-3 col-span-1 rounded-lg  bg-purple-600 hover:bg-purple-400' to='blogs'>blogs</Link>
+        <LogoutButton />
+        </nav>
+  
       <Routes>
         <Route path='users/*' element={<Users/>} />
-        <Route path='blogs/*' element={
-          <>
-             <Notification />
-            <Togglable buttonLabel='new blog' ref={blogFormRef}>
-              <BlogForm createBlog={createBlog}/>
-            </Togglable>
-            <h2>blogs</h2>
-            {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} handleLikeButton={() => handleLikeButton(blog)} handleDeleteButton={() => handleDeleteButton(blog.id)}/>
-            )}
-          </>
-        } />
+        <Route path='blogs/*' element={<BlogWrapper blogs={blogs} handleLikeButton={handleLikeButton}/>} />
       </Routes>
       </Router>
     </div>

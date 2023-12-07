@@ -41,16 +41,25 @@ const unknownEndpoint = (request, response) => {
 
 const errorHandler = (error, request, response, next) => {
   logger.error('---', error)
+  console.log('error name', error.name)
 
   if (error.name === 'CastError') {
     return response.status(404).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
-    // console.log(error)
+    console.log('line 49', error)
+    return response.status(400).json({error: 'ValidationError' })
+    
+
     // let errors = {};
     //   Object.keys(error.errors).forEach((key) => {
     //     errors[key] = error.errors[key].message;
     //   });
-    return response.status(400).json({error: error.errors.username.message })
+      if (error.errors.username.message) {
+        return response.status(400).json({error: error.errors.username.message })
+
+      } else if (error.errors) {
+
+      }
   } else if (error.name === 'PasswordError') {
     return response.status(400).send(error.message)
   } else if (error.name === 'JsonWebTokenError') {

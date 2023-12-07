@@ -17,7 +17,7 @@ const UserList = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-        {users.map(user => <tr key={user.id}><td><Link to={`/users/${user.id}`}> {user.username}</Link></td><td>{user.blogs.length}</td></tr>)}
+        {users.map(user => <tr  key={user.id}><td className='hover:text-purple-400'><Link to={`/users/${user.id}`}> {user.username}</Link></td><td>{user.blogs.length}</td></tr>)}
         </tbody>
       </table>
     </div>

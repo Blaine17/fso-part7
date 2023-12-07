@@ -31,7 +31,6 @@ mongoose.connect(config.MONGODB_URI)
   
   app.use('/api/blogs', blogRouter)
   app.use('/api/users', usersRouter)
-  // login is trying to verify token but i hasnt been set yet 
   app.use('/api/login', loginRouter)
 
   if (process.env.NODE_ENV === 'test') {
